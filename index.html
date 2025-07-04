@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영어 단어 퀴즈</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .word-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #4CAF50;
+            transition: transform 0.3s ease;
+        }
+        .word-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .word-title {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .pronunciation {
+            font-size: 1.3em;
+            color: #e74c3c;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .meaning {
+            font-size: 1.1em;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+        .quiz-section {
+            background: #fff3cd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            border-left: 4px solid #ffc107;
+        }
+        .quiz-question {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        .quiz-options {
+            margin-left: 20px;
+        }
+        .quiz-options div {
+            margin: 8px 0;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .quiz-options div:hover {
+            background-color: #f8f9fa;
+        }
+        .answer {
+            background: #d4edda;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+        .highlight {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .sound-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+        .sound-btn:hover {
+            background: #0056b3;
+        }
+        .similar-words {
+            background: #e8f5e8;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+        .different-letter {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            background: #d4edda;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .check-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .check-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 영어 단어 퀴즈 🎯</h1>
+        
+        <div class="word-section">
+            <div class="word-title">Life</div>
+            <div class="pronunciation">라이프 [laɪf] <button class="sound-btn" onclick="playSound('life')">🔊</button></div>
+            <div class="meaning">인생, 생명</div>
+            <div class="quiz-section">
+                <div class="quiz-question">❓ "My _____ is very happy." (내 인생은 매우 행복해.) 
+                    <button class="sound-btn" onclick="playSentence('My life is very happy')">🔊</button>
+                </div>
+                <div class="quiz-options">
+                    <div onclick="checkAnswer(this, false)">① live</div>
+                    <div onclick="checkAnswer(this, true)">② life</div>
+                    <div onclick="checkAnswer(this, false)">③ world</div>
+                </div>
+                <div class="answer">
+                    <div class="highlight">정답: ② life</div>
+                    <div>💡 Life는 명사로 "인생, 생명"을 의미해요!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="word-section">
+            <div class="word-title">Live</div>
+            <div class="pronunciation">리브 [lɪv] <button class="sound-btn" onclick="playSound('live')">🔊</button></div>
+            <div class="meaning">살다, 거주하다</div>
+            <div class="similar-words">
+                <strong>🔍 비슷한 단어 구별하기:</strong><br>
+                L<span class="different-letter">i</span>fe (라이프) - 명사: 인생<br>
+                L<span class="different-letter">i</span>ve (리브) - 동사: 살다
+            </div>
+            <div class="quiz-section">
+                <div class="quiz-question">❓ "I _____ in Seoul." (나는 서울에 살아.) 
+                    <button class="sound-btn" onclick="playSentence('I live in Seoul')">🔊</button>
+                </div>
+                <div class="quiz-options">
+                    <div onclick="checkAnswer(this, false)">① life</div>
+                    <div onclick="checkAnswer(this, true)">② live</div>
+                    <div onclick="checkAnswer(this, false)">③ word</div>
+                </div>
+                <div class="answer">
+                    <div class="highlight">정답: ② live</div>
+                    <div>💡 Live는 동사로 "살다, 거주하다"를 의미해요!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="word-section">
+            <div class="word-title">World</div>
+            <div class="pronunciation">월드 [wɜːrld] <button class="sound-btn" onclick="playSound('world')">🔊</button></div>
+            <div class="meaning">세계, 세상</div>
+            <div class="quiz-section">
+                <div class="quiz-question">❓ "The _____ is beautiful." (세상은 아름다워.) 
+                    <button class="sound-btn" onclick="playSentence('The world is beautiful')">🔊</button>
+                </div>
+                <div class="quiz-options">
+                    <div onclick="checkAnswer(this, false)">① word</div>
+                    <div onclick="checkAnswer(this, true)">② world</div>
+                    <div onclick="checkAnswer(this, false)">③ work</div>
+                </div>
+                <div class="answer">
+                    <div class="highlight">정답: ② world</div>
+                    <div>💡 World는 "세계, 세상"을 의미해요!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="word-section">
+            <div class="word-title">Word</div>
+            <div class="pronunciation">워드 [wɜːrd] <button class="sound-btn" onclick="playSound('word')">🔊</button></div>
+            <div class="meaning">말, 단어</div>
+            <div class="similar-words">
+                <strong>🔍 비슷한 단어 구별하기:</strong><br>
+                Wo<span class="different-letter">r</span>d (워드) - 단어<br>
+                Wo<span class="different-letter">rl</span>d (월드) - 세계
+            </div>
+            <div class="quiz-section">
+                <div class="quiz-question">❓ "I don't know this _____." (나는 이 단어를 몰라.) 
+                    <button class="sound-btn" onclick="playSentence('I don\'t know this word')">🔊</button>
+                </div>
+                <div class="quiz-options">
+                    <div onclick="checkAnswer(this, false)">① world</div>
+                    <div onclick="checkAnswer(this, true)">② word</div>
+                    <div onclick="checkAnswer(this, false)">③ work</div>
+                </div>
+                <div class="answer">
+                    <div class="highlight">정답: ② word</div>
+                    <div>💡 Word는 "말, 단어"를 의미해요!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="word-section">
+            <div class="word-title">Work</div>
+            <div class="pronunciation">워크 [wɜːrk] <button class="sound-btn" onclick="playSound('work')">🔊</button></div>
+            <div class="meaning">일하다, 노력하다</div>
+            <div class="quiz-section">
+                <div class="quiz-question">❓ "I _____ hard every day." (나는 매일 열심히 일해.) 
+                    <button class="sound-btn" onclick="playSentence('I work hard every day')">🔊</button>
+                </div>
+                <div class="quiz-options">
+                    <div onclick="checkAnswer(this, false)">① word</div>
+                    <div onclick="checkAnswer(this, false)">② world</div>
+                    <div onclick="checkAnswer(this, true)">③ work</div>
+                </div>
+                <div class="answer">
+                    <div class="highlight">정답: ③ work</div>
+                    <div>💡 Work는 "일하다, 노력하다"를 의미해요!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="word-section" style="background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-left: 5px solid #e53e3e;">
+            <h2 style="color: #e53e3e; text-align: center;">🎯 최종 도전 퀴즈!</h2>
+            <div class="quiz-section">
+                <div class="quiz-question">❓ 다음 문장의 빈칸에 알맞은 단어를 고르세요: 
+                    <button class="sound-btn" onclick="playSentence('My life is to live in this beautiful world and learn every new word')">🔊</button>
+                </div>
+                <div style="margin: 15px 0;">
+                    <strong>"My _____ is to _____ in this beautiful _____ and learn every new _____."</strong><br>
+                    <small>(내 인생은 이 아름다운 세상에서 살며 모든 새로운 단어를 배우는 것이다.)</small>
+                </div>
+                <div class="quiz-options">
+                    <div onclick="checkFinalAnswer(this, false)">① work, live, word, world</div>
+                    <div onclick="checkFinalAnswer(this, true)">② life, live, world, word</div>
+                    <div onclick="checkFinalAnswer(this, false)">③ live, work, life, world</div>
+                </div>
+                <div class="answer">
+                    <div class="highlight">정답: ② life, live, world, word</div>
+                    <div>💡 Life(인생) - Live(살다) - World(세상) - Word(단어) 순서예요!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(element, isCorrect) {
+            const answerDiv = element.parentElement.nextElementSibling;
+            const allOptions = element.parentElement.children;
+            
+            // 모든 옵션 색상 초기화
+            for (let option of allOptions) {
+                option.style.backgroundColor = '';
+                option.style.color = '';
+            }
+            
+            if (isCorrect) {
+                element.style.backgroundColor = '#d4edda';
+                element.style.color = '#155724';
+                answerDiv.style.display = 'block';
+            } else {
+                element.style.backgroundColor = '#f8d7da';
+                element.style.color = '#721c24';
+                setTimeout(() => {
+                    element.style.backgroundColor = '';
+                    element.style.color = '';
+                }, 1000);
+            }
+        }
+
+        function checkFinalAnswer(element, isCorrect) {
+            const answerDiv = element.parentElement.nextElementSibling;
+            const allOptions = element.parentElement.children;
+            
+            // 모든 옵션 색상 초기화
+            for (let option of allOptions) {
+                option.style.backgroundColor = '';
+                option.style.color = '';
+            }
+            
+            if (isCorrect) {
+                element.style.backgroundColor = '#d4edda';
+                element.style.color = '#155724';
+                answerDiv.style.display = 'block';
+                // 축하 메시지
+                setTimeout(() => {
+                    alert('🎉 축하합니다! 모든 단어를 완벽하게 이해했네요!');
+                }, 500);
+            } else {
+                element.style.backgroundColor = '#f8d7da';
+                element.style.color = '#721c24';
+                setTimeout(() => {
+                    element.style.backgroundColor = '';
+                    element.style.color = '';
+                }, 1000);
+            }
+        }
+
+        function playSound(word) {
+            // 웹 Speech API를 사용하여 발음
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('죄송합니다. 이 브라우저에서는 발음 기능을 지원하지 않습니다.');
+            }
+        }
+
+        function playSentence(sentence) {
+            // 예문 발음
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(sentence);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.7;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('죄송합니다. 이 브라우저에서는 발음 기능을 지원하지 않습니다.');
+            }
+        }
+    </script>
+</body>
+</html>
